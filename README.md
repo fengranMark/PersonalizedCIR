@@ -92,7 +92,7 @@ To conduct conversational dense retrieval fine-tuning, please run the following 
 
 Now, we can perform retrieval to evaluate the ConvHACL-trained dense retriever by running:
 
-    python test_retrieval_cast.py --pretrained_encoder_path=$trained_model_path \ 
+    python test_cast.py --pretrained_encoder_path=$trained_model_path \ 
       --passage_embeddings_dir_path=$passage_embeddings_dir_path \ 
       --passage_offset2pid_path=$passage_offset2pid_path \
       --qrel_output_path=$qrel_output_path \ % output dir
@@ -105,6 +105,6 @@ Now, we can perform retrieval to evaluate the ConvHACL-trained dense retriever b
       --max_concat_length=512 \ 
       --is_train=False \
       --top_k=100 \
-      --rel_threshold=1 \ # 2 for CAsT-20 and CAsT-21
+      --rel_threshold=1 \ 
       --passage_block_num=$passage_block_num \
       --use_gpu=True
