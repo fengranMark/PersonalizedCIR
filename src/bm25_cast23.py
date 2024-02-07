@@ -91,35 +91,6 @@ def main():
                                                 ))
                 f.write('\n')
 
-def agg_res_with_maxp(run_trec_file):
-    res_file = os.path.join(run_trec_file)
-    with open(run_trec_file, 'r' ) as f:
-        run_data = f.readlines()
-    
-    agg_run = {}
-    for line in run_data:
-        line = line.strip().split(" ")
-        sample_id = line[0]
-        if sample_id not in agg_run:
-            agg_run[sample_id] = {}
-        doc_id = "_".join(line[2].split('_')[:2])
-        try:
-            score = float(line[5])
-        except:
-            breakpoint()
-        if doc_id not in agg_run[sample_id]:
-            agg_run[sample_id][doc_id] = 0
-        agg_run[sample_id][doc_id] = max(agg_run[sample_id][doc_id], score)
-    
-    agg_run = {k: sorted(v.items(), key=lambda item: item[1], reverse=True) for k, v in agg_run.items()}
-    with open(os.path.join(run_trec_file + ".agg"), "w") as f:
-        for sample_id in agg_run:
-            doc_scores = agg_run[sample_id]
-            rank = 1
-            for doc_id, real_score in doc_scores:
-                rank_score = 2000 - rank
-                f.write("{} Q0 {} {} {} {}\n".format(sample_id, doc_id, rank, rank_score, real_score, "ance"))
-                rank += 1
 
 def print_res(run_file, qrel_file, rel_threshold):
     with open(run_file, 'r' )as f:
@@ -225,7 +196,5 @@ def get_args():
 if __name__ == '__main__':
     main()
     args = get_args()
-    agg_res_with_maxp(oj(args.output_dir_path, args.output_dir_path1))
     print_res(oj(args.output_dir_path, args.output_dir_path1), args.gold_qrel_file_path, args.rel_threshold)
 
-    #trec_eval(run_trec_file + ".agg", args.gold_qrel_file_path, "/home/kelong_mao/workspace/ConvRetriever/outputs/test/cast21/convdr/", 1)
