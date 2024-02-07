@@ -460,5 +460,4 @@ def get_args():
     return args
 
 if __name__ == '__main__':
-    #main()
-    print_trec_res("output/cast23/dense/LLMConvGQR_cast23_res.trec", "datasets/cast23/qrels.trec", rel_threshold=1)
+    main()
