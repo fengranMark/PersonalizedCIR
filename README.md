@@ -22,23 +22,29 @@ Four public datasets can be downloaded from TREC Interactive Knowledge Assistanc
 There are two approaches: one involves the selection of ptkb followed by the generation of a reformulation using the chosen ptkb, while the other entails the concurrent output of both the selected ptkb and the reformulation by the LLM.
 
 ### 2.1 Select ptkb
-Using LLM to select or machine choose(Add a ptkb in sequence and select the ptkb with improved scores compared to not adding it.)
+Using LLM to select or machine choose(Add a ptkb in sequence and select the ptkb with improved NDCG@3 compared to not adding ptkb.)
 
-    python generate_session_data_dial-level.py
-    python generate_augmented_query.py
+    python LLM_select_ptkb_Xshot.py --input_path=$input_path \ 
+      --output_path=$output_path \ 
+      --shot=$shot \ # 0shot,1shot,3shot,5shot
+    python add_ptkb_one_by_one.py --input_path=$input_path \ 
+      --output_path=$output_path \ 
 
 ### 2.2 Generate reformulation using the selected ptkb
 Generate a reformulation using the selected ptkb.(Two types of prompt)
 
-    python generate_session_data_dial-level.py
-    python generate_augmented_query.py
-
+    python LLM_select_ptkb_Xshot.py --input_path=$input_path \ 
+      --output_path=$output_path \ 
+      --annotation=$annotation \ # human choose,machine choose,LLM 0,1,3,5 choose
+      --prompt_type=$prompt_type \ # type1,type2
+      
 ### 2.3 Selecte and reformulate
 Simultaneously output selected ptkb and reformulation.
 
-    python generate_session_data_dial-level.py
-    python generate_augmented_query.py
-    
+    python select&reformulate_Xshot.py --input_path=$input_path \ 
+      --output_path=$output_path \ 
+      --shot=$shot \ # 0shot,1shot,3shot,5shot
+
 ## 3. Retrieval Indexing (Dense and Sparse)
 
 To evaluate the trained model by ConvSDG, we should first establish index for both dense and sparse retrievers.
