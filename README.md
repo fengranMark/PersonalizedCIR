@@ -1,5 +1,5 @@
 # PersonalizedCIR
-A code base for personalized conversational query reformulation.
+A code base for personalized conversational query reformulation. (A SIGIR 2023 short paper submission)
 
 # Environment Dependency
 
@@ -47,12 +47,13 @@ Simultaneously output selected ptkb and reformulation.
 
 ## 3. Retrieval Indexing (Dense and Sparse)
 
-To evaluate the trained model by ConvSDG, we should first establish index for both dense and sparse retrievers.
+To evaluate the reformulated query, we should first establish index for both dense and sparse retrievers.
 
 ### 3.1 Dense
-For dense retrieval, we use the pre-trained ad-hoc search model ANCE to generate passage embeedings. Two scripts for each dataset are provided by running:
+For dense retrieval, we use the pre-trained ad-hoc search model ANCE to generate passage embeedings. Two scripts for each dataset are provided in index folder by running:
 
-    python dense_index.py
+    python gen_tokenized_doc.py --config=gen_tokenized_doc.toml
+    python gen_doc_embeddings.py --config=gen_doc_embeddings.toml
 
 ### 3.2 Sparse
 
@@ -64,45 +65,27 @@ Then create the index for the collection by running
 
     bash create_index.sh
 
-## 4. Generate Supervision Signals
-The supervision signals assigned for dialogue-level generated data (for unsupervised w/o relevance judgment) are run by the following commands based on both sparse and dense retrieval.
+## 4. Retrieval evaluation
 
-    python search_relevant_p_sparse.py
-    python search_relevant_p_dense.py
+### 4.1
+We can perform sparse retrieval to evaluate the personalized reformulated queries by running:
 
-For the query-level generated data (for semi-supervised w/. relevance judgment), we directly use the original annotations as supervision signals. Thus, after generating the augmented query data, run the following command for combination:
+    python bm25_ikat.py
+    
+### 4.2
+We can perform dense retrieval to evaluate the personalized reformulated queries by running:
 
-    python preprocess_cast_augmented.py
-
-## 5. Conversational Dense Retrieval Fine-tuning
-To conduct conversational dense retrieval fine-tuning, please run the following commands. The pre-trained language model we use for dense retrieval is [ANCE](https://github.com/microsoft/ANCE).
-
-    python train_conretriever(_augment).py --pretrained_encoder_path="checkpoints/ad-hoc-ance-msmarco" \ 
-      --train_file_path=$train_file_path \ 
-      --log_dir_path=$log_dir_path \
-      --model_output_path=$model_output_path \ 
-      --per_gpu_train_batch_size=16 \ 
-      --num_train_epochs=5 \
-      --max_query_length=64 \
-      --max_doc_length=384 \ 
-      --max_concat_length=512 \
-      --is_train=True \
-
-## 6. Retrieval evaluation
-
-Now, we can perform retrieval to evaluate the ConvHACL-trained dense retriever by running:
-
-    python test_cast.py --pretrained_encoder_path=$trained_model_path \ 
+    python test_ikat.py --pretrained_encoder_path=$trained_model_path \ 
       --passage_embeddings_dir_path=$passage_embeddings_dir_path \ 
       --passage_offset2pid_path=$passage_offset2pid_path \
       --qrel_output_path=$qrel_output_path \ % output dir
       --output_trec_file=$output_trec_file \
       --trec_gold_qrel_file_path=$trec_gold_qrel_file_path \ % gold qrel file
       --per_gpu_train_batch_size=4 \ 
-      --test_type=convq \ 
+      --test_type=rewrite \ 
       --max_query_length=64 \
       --max_doc_length=384 \ 
-      --max_concat_length=512 \ 
+      --max_response_length=256 \
       --is_train=False \
       --top_k=100 \
       --rel_threshold=1 \ 
