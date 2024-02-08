@@ -67,12 +67,12 @@ Then create the index for the collection by running
 
 ## 4. Retrieval evaluation
 
-### 4.1
+### 4.1 Sparse retrieval
 We can perform sparse retrieval to evaluate the personalized reformulated queries by running:
 
     python bm25_ikat.py
     
-### 4.2
+### 4.2 Dense retrieval
 We can perform dense retrieval to evaluate the personalized reformulated queries by running:
 
     python test_ikat.py --pretrained_encoder_path=$trained_model_path \ 
