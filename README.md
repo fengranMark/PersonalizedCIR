@@ -19,7 +19,7 @@ Main packages:
 Four public datasets can be downloaded from TREC Interactive Knowledge Assistance Track (iKAT)(https://www.trecikat.com/).
 
 ## 2. Generate reformulation
-There are two approaches: one involves the selection of ptkb followed by the generation of a reformulation using the chosen ptkb, while the other entails the concurrent output of both the selected ptkb and the reformulation by the LLM.
+There are two approaches: one involves the selection of ptkb followed by the generation of a reformulation using the chosen ptkb, while the other entails the concurrent output of both the selected ptkb and the reformulation by the LLM. The prompt templates are provided in $$prompt_template.md$$.
 
 ### 2.1 Select ptkb
 Using LLM to select or machine choose(Add a ptkb in sequence and select the ptkb with improved NDCG@3 compared to not adding ptkb.)
