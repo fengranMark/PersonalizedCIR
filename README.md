@@ -27,6 +27,7 @@ Using LLM to select or machine choose(Add a ptkb in sequence and select the ptkb
     python LLM_select_ptkb_Xshot.py --input_path=$input_path \ 
       --output_path=$output_path \ 
       --shot=$shot \ # 0shot,1shot,3shot,5shot
+      
     python add_ptkb_one_by_one.py --input_path=$input_path \ 
       --output_path=$output_path \ 
 
