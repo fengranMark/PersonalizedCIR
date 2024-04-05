@@ -1,5 +1,5 @@
 # PersonalizedCIR
-A code base for personalized conversational query reformulation. (A SIGIR 2023 short paper submission)
+A code base for personalized conversational query reformulation.
 
 # Environment Dependency
 
