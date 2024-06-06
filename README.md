@@ -16,7 +16,7 @@ Main packages:
 
 ## 1. Download data and Preprocessing
 
-Four public datasets can be downloaded from TREC Interactive Knowledge Assistance Track (iKAT)(https://www.trecikat.com/).
+Datasets can be downloaded from TREC Interactive Knowledge Assistance Track (iKAT)(https://www.trecikat.com/).
 
 ## 2. Generate reformulation
 There are two approaches: one involves the selection of ptkb followed by the generation of a reformulation using the chosen ptkb, while the other entails the concurrent output of both the selected ptkb and the reformulation by the LLM. The prompt templates are provided in **prompt_template.md**.
