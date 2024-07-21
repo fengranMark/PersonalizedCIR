@@ -1,5 +1,5 @@
 # PersonalizedCIR
-A code base for personalized conversational query reformulation.
+This is the temporary repository of our CIKM 2024 accepted paper - How to Leverage Personal Textual Knowledge for Personalized Conversational Information Retrieval.
 
 # Environment Dependency
 
@@ -16,7 +16,7 @@ Main packages:
 
 ## 1. Download data and Preprocessing
 
-Datasets can be downloaded from TREC Interactive Knowledge Assistance Track (iKAT)(https://www.trecikat.com/).
+Datasets can be downloaded from the TREC Interactive Knowledge Assistance Track (iKAT)(https://www.trecikat.com/).
 
 ## 2. Generate reformulation
 There are two approaches: one involves the selection of ptkb followed by the generation of a reformulation using the chosen ptkb, while the other entails the concurrent output of both the selected ptkb and the reformulation by the LLM. The prompt templates are provided in **prompt_template.md**.
@@ -32,11 +32,11 @@ Using LLM to select or machine choose(Add a ptkb in sequence and select the ptkb
       --output_path=$output_path \ 
 
 ### 2.2 Generate reformulation using the selected ptkb
-Generate a reformulation using the selected ptkb.(Two types of prompt)
+Generate a reformulation using the selected ptkb. (Two types of prompt)
 
     python LLM_select_ptkb_Xshot.py --input_path=$input_path \ 
       --output_path=$output_path \ 
-      --annotation=$annotation \ # human choose,machine choose,LLM 0,1,3,5 choose
+      --annotation=$annotation \ # human choose, machine choose, LLM 0,1,3,5 choose
       --prompt_type=$prompt_type \ # type1,type2
       
 ### 2.3 Selecte and reformulate
@@ -51,7 +51,7 @@ Simultaneously output selected ptkb and reformulation.
 To evaluate the reformulated query, we should first establish index for both dense and sparse retrievers.
 
 ### 3.1 Dense
-For dense retrieval, we use the pre-trained ad-hoc search model ANCE to generate passage embeedings. Two scripts for each dataset are provided in index folder by running:
+For dense retrieval, we use the pre-trained ad-hoc search model ANCE to generate passage embeddings. Two scripts for each dataset are provided in the index folder by running:
 
     python gen_tokenized_doc.py --config=gen_tokenized_doc.toml
     python gen_doc_embeddings.py --config=gen_doc_embeddings.toml
